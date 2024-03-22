@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const startScanBtn = document.getElementById('startScanBtn');
     const qrResult = document.getElementById('qrResult');
+    console.log(document.cookie)
 
     // startScanBtn.addEventListener('click', function () {
     //     // Function to handle QR scanning

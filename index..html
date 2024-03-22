@@ -14,15 +14,13 @@
               <img
                 class="w-9 h-9 rounded-lg"
                 src="Arma_logo.jpg"
-              >
-              
-            </img>
+              />
             </div>
             <h2 class="text-center text-2xl font-bold leading-tight text-black">
               Sign in to your account
             </h2>
         
-            <form action="#" method="POST" class="mt-8">
+            <form id="loginForm" class="mt-8">
               <div class="space-y-5">
                 <div>
                   <label for="" class="text-base font-medium text-gray-900">
@@ -32,6 +30,8 @@
                     <input
                       class="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="username"
+                      id="username"
+                      autocomplete=""
                       placeholder="Username"
                     />
                   </div>
@@ -46,12 +46,15 @@
                     <input
                       class="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="password"
+                      id="password"
+                      autocomplete=""
                       placeholder="Password"
                     />
                   </div>
                 </div>
                 <div>
                   <button
+                    id="loginBtn"
                     type="button"
                     class="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                   >
@@ -78,6 +81,6 @@
           </div>
         </div>
       </section>
-      
+      <script src="index.js"></script>
 </body>
 </html>
