@@ -3,7 +3,7 @@ async function login() {
     const password = document.getElementById('password').value;
 
     try {
-        const loginApiUrl = 'http://localhost:8000/api/v1/security/login';
+        const loginApiUrl = 'http://students.iiserb.ac.in:8000/api/v1/security/login';
 
         const response = await fetch(loginApiUrl, {
             method: 'POST',
@@ -14,7 +14,7 @@ async function login() {
                 username: username,
                 password: password
             }),
-            credentials: 'include'
+            // credentials: 'include'
         });
 
         // console.log(responseData)
@@ -25,7 +25,8 @@ async function login() {
 
             // Login successful, store team ID
             securityDetails = responseData.data;
-            console.log(securityDetails)
+            localStorage.setItem("accessToken", securityDetails.accessToken)
+            window.location.href = "qr.html";
 
             // fetchLatestStockPrices();
         } else if(response.status === 401) {

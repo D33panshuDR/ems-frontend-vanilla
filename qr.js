@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const startScanBtn = document.getElementById('startScanBtn');
     const qrResult = document.getElementById('qrResult');
-    console.log(document.cookie)
+    const accessToken = localStorage.getItem("accessToken")
 
     // startScanBtn.addEventListener('click', function () {
     //     // Function to handle QR scanning
@@ -27,17 +27,18 @@ document.addEventListener('DOMContentLoaded', function () {
     //     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     // });
 
+    if(!accessToken) window.location.href = "index.html"
+
     const html5QrCode = new Html5Qrcode("reader");
     const qrCodeSuccessCallback = async function(decodedText, decodedResult) {
         qrResult.innerText= decodedText
         html5QrCode.stop()
-        console.log(decodedText)
         const response = await fetch(
-            "http://localhost:8000/api/v1/security/verify-hash",
+            "http://students.iiserb.ac.in:8000/api/v1/security/verify-hash",
             {
                 method: "POST",
                 headers: {
-                    "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY4OGRlMDQxY2Q5NDMxMGI1N2Q2ZGUiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6InRlc3RuYW1lIiwiZnVsbE5hbWUiOiJUZXN0IiwiaWF0IjoxNzExMDU5MjAxLCJleHAiOjE3MTExNDU2MDF9.ZFYIrKBWWh1djGOsIKhNQdHb4yb-3h5BzgR8rbDoXr4",
+                    "Authorization" : `Bearer ${accessToken}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({"hash" : decodedText })
@@ -52,9 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // If you want to prefer back camera
         html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
     })
-
-    
-    
 
     // // Select front camera or fail with `OverconstrainedError`.
     // html5QrCode.start({ facingMode: { exact: "user"} }, config, qrCodeSuccessCallback);
