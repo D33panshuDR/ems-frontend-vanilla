@@ -1,31 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
     const startScanBtn = document.getElementById('startScanBtn');
     const qrResult = document.getElementById('qrResult');
+    const scannerSection = document.getElementById("scannerSection")
+    const acceptedSection = document.getElementById("acceptedSection")
+    const deniedSection = document.getElementById("deniedSection")
+
     const accessToken = localStorage.getItem("accessToken")
 
-    // startScanBtn.addEventListener('click', function () {
-    //     // Function to handle QR scanning
-    //     var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
-    //     html5QrcodeScanner.render(onScanSuccess);
-
-
-    //     function onScanSuccess(decodedText, decodedResult) {
-    //     // Handle on success condition with the decoded text or result.
-    //     console.log(`Scan result: ${decodedText}`, decodedResult);
-    //     qrResult.innerText = scannedText;
-    //     // ...
-    //     html5QrcodeScanner.clear();
-    //     // ^ this will stop the scanner (video feed) and clear the scan area.
-    //     }
-
-    //     function onScanFailure(error) {
-    //         // handle scan failure, usually better to ignore and keep scanning.
-    //         // for example:
-    //         console.warn(`Code scan error = ${error}`);
-    //     }
-
-    //     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    // });
+    const fullName = document.getElementById("fullName")
+    const email = document.getElementById("email")
+    const purpose = document.getElementById("purpose")
+    const access = document.getElementById("access")
+    const photoId = document.getElementById("photoId")
+    const institution = document.getElementById("institution")
 
     if(!accessToken) window.location.href = "index.html"
 
@@ -44,8 +31,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({"hash" : decodedText })
             }
         )
-        const data = await response.json()
-        qrResult.innerText = data.data.fullName
+
+        if(response.status === 200) {
+            const data = await response.json()
+            const teamMember = data.data
+
+            scannerSection.classList.add("hidden")
+            acceptedSection.classList.remove("hidden")
+
+            //Update the html tags
+            fullName.innerText = teamMember.fullName
+            email.innerText = teamMember.email
+            purpose.innerText = teamMember.purpose
+            access.innerText = teamMember.access.split(",")
+            photoId.src = teamMember.photoId
+            institution.innerText = teamMember.institution
+        } else {
+            scannerSection.classList.add("hidden")
+            deniedSection.classList.remove("hidden")
+        }
+        
+
     };
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
